@@ -1,0 +1,22 @@
+{
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "vue",
+    "json",
+    "css",
+    "html"
+  ],
+  "eslint.enable": true,
+  "eslint.filetypes": ["javascript", "vue", "json", "css", "html"],
+  "diagnostic.errorSign": "❌",
+  "diagnostic.warningSign": "⚠️ ",
+  "diagnostic.infoSign": "❕",
+  "eslint.options": {
+    "configFile": ".eslintrc.js"
+  },
+  "vetur.format.defaultFormatter.html": "prettier",
+  "tailwindCSS.headwind.removeDuplicates": true,
+  "tailwindCSS.headwind.runOnSave": true
+}
