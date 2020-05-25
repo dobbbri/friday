@@ -139,6 +139,7 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '^node_modules$']
 " closes after opening a file
 let g:NERDTreeQuitOnOpen = 1
+
 " === vim-nerdtree-syntax-highlight ==== "
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
@@ -152,8 +153,8 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Renamed"   : "➜",
     \ "Unmerged"  : "⋔",
     \ "Deleted"   : "✖",
-    \ "Dirty"     : "☹︎",
-    \ "Clean"     : "☺︎",
+    \ "Dirty"     : "⚈",
+    \ "Clean"     : " ",
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
@@ -194,6 +195,13 @@ catch
   echo 'Airline not installed. It should work after running :PlugInstall'
 endtry
 
+" === vim-move === "
+" <A-k>   Move current line/selection up
+" <A-j>   Move current line/selection down
+" <A-h>   Move current character/selection left
+" <A-l>   Move current character/selection right
+" replace Alt key by Control key
+" let g:move_key_modifier = 'C'
 
 " === echodoc === "
 " Enable echodoc on startup
@@ -218,7 +226,7 @@ set termguicolors
 " Vim airline theme
 let g:airline_theme='space'
 " Change vertical split character to be a space (essentially hide it)
-" set fillchars+=vert:|
+" set fillchars+=vert:.
 " Set preview window to appear at bottom
 set splitbelow
 " Don't dispay mode in command line (airilne already shows it)
@@ -239,7 +247,7 @@ function! TrailingSpaceHighlights() abort
   call matchadd('Trail', '\s\+$', 100)
 endfunction
 
-function! s:custom_jarvis_colors()
+function! s:custom_colors()
   " coc.nvim color changes
   hi link CocErrorSign WarningMsg
   hi link CocWarningSign Number
@@ -267,7 +275,7 @@ function! s:custom_jarvis_colors()
 endfunction
 
 autocmd! ColorScheme * call TrailingSpaceHighlights()
-autocmd! ColorScheme OceanicNext call s:custom_jarvis_colors()
+autocmd! ColorScheme OceanicNext call s:custom_colors()
 
 " Call method on window enter
 augroup WindowManagement
@@ -285,9 +293,14 @@ endfunction
 " Editor theme
 set background=dark
 try
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  colorscheme night-owl
+  " colorscheme dracula
   " colorscheme OceanicNext
-  colorscheme vim-material
-  let g:material_style='oceanic'
+  " let g:material_style='oceanic'
+  " colorscheme vim-material
+  " let g:gruvbox_contrast_dark='hard'
+  " colorscheme gruvbox
 catch
   colorscheme slate
 endtry
@@ -364,8 +377,8 @@ nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
 " format current buffer
-vmap <C-f> :CocCommand prettier.formatFile<CR>
-nmap <C-f> :CocCommand prettier.formatFile<CR>
+vmap <C-f> :call CocAction('format')<CR>
+nmap <C-f> :call CocAction('format')<CR>
 
 " === coc.nvim === "
 "   <leader>dd    - Jump to definition of current symbol

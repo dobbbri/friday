@@ -10,9 +10,9 @@
   ],
   "eslint.enable": true,
   "eslint.filetypes": ["javascript", "vue", "json", "css", "html"],
-  "diagnostic.errorSign": "❌",
-  "diagnostic.warningSign": "⚠️ ",
-  "diagnostic.infoSign": "❕",
+  "diagnostic.errorSign": "⚈",
+  "diagnostic.warningSign": "⚈",
+  "diagnostic.infoSign": "⚈",
   "eslint.options": {
     "configFile": ".eslintrc.js"
   },

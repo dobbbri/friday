@@ -1,0 +1,8 @@
+*~
+.DS_Store
+Iconr
+*.swap
+*.swp
+*.lock
+vim/bundle/*
+keys

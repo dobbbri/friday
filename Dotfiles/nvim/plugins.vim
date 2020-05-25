@@ -32,7 +32,15 @@ Plug 'easymotion/vim-easymotion'
 
 " Intellisense Engine
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-tsserver', 'coc-css', 'coc-json', 'coc-eslint', 'coc-prettier', 'coc-vetur', 'coc-tailwindcss']
+let g:coc_global_extensions = [
+      \ 'coc-tsserver',
+      \ 'coc-css',
+      \ 'coc-json',
+      \ 'coc-eslint',
+      \ 'coc-prettier',
+      \ 'coc-vetur',
+      \ 'coc-tailwindcss'
+      \ ]
 
 " Denite - Fuzzy finding, buffer management
 Plug 'Shougo/denite.nvim'
@@ -43,6 +51,10 @@ Plug 'Shougo/neosnippet-snippets'
 
 " Print function signatures in echo area
 Plug 'Shougo/echodoc.vim'
+
+" move selected text around
+Plug 'matze/vim-move'
+
 " === Git Plugins === "
 " Enable git changes to be shown in sign columnPlug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
@@ -65,6 +77,9 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Colorscheme
 Plug 'mhartington/oceanic-next'
 Plug 'hzchirs/vim-material'
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'haishanh/night-owl.vim'
 
 " Customized vim status line
 Plug 'vim-airline/vim-airline'

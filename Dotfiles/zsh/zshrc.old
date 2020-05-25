@@ -1,0 +1,234 @@
+export ZSH="/Users/sldobri/.oh-my-zsh"
+export ZSH_CUSTOM="$ZSH/custom"
+export NODE_ENV="development"
+
+export PATH="/usr/local/opt/node@10/bin:$PATH"
+export PATH="/usr/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="`npm global bin`:$PATH"
+# export PATH="/usr/local/opt/mongodb@3.4/bin:$PATH"
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# export PATH=$PATH:$(yarn global bin)
+
+export EDITOR="subl"
+export GIT_EDITOR="subl"
+export VISUAL="subl"
+export XDEBUG_CONFIG="idekey=subl"
+export TERM="xterm-256color"
+export LANG=en_US.UTF-8
+
+# Zsh Theme
+# ZSH_THEME="steeef"
+ZSH_THEME="avit"
+# ZSH_THEME="spaceship"
+# ZSH_THEME="bullet-train"
+
+
+plugins=(
+  npm
+  git
+  git-extras
+  osx
+  zsh-autosuggestions
+  # zsh-syntax-highlighting
+  z
+)
+
+source $ZSH/oh-my-zsh.sh
+
+
+# node modules
+alias removeAllNodeFiles='find . -name "node_modules" -print0 | xargs -0 rm -rf'
+alias findAllNodeFiles='find . -name "node_modules"'
+
+
+# Previewing Locally
+alias preview='serve -s dist'
+
+
+# Editors
+alias s.='subl .'
+alias c.='code .  --disable-gpu'
+
+# Projects
+alias wrm='cd /Volumes/Projects/wr-manager && clear && c.'
+alias wrp='cd /Volumes/Projects/wr-presenter && clear && c.'
+
+# Sites
+alias anp='cd /Volumes/Sites/agua_nova_piscinas && clear && s.'
+alias ptOld='cd /Volumes/Sites/pousada_do_tucunare && clear && s.'
+alias r3c='cd /Volumes/Sites/rancho_tres_coracoes_2019 && clear && s.'
+alias q1s='cd /Volumes/Sites/quero1site_2020 && clear && s. && nrd'
+alias sc='cd /Volumes/Sites/shopping_da_carne_2020 && clear && s. && nrd'
+alias fa='cd /Volumes/Sites/filmAgora_2020 && clear && s. && nrd'
+alias dm='cd /Volumes/Sites/dular_moveis_2020 && clear && s. && nrd'
+alias co='cd /Volumes/Sites/colchoes_oriental_2020 && clear && s. && nrd'
+alias pt='cd /Volumes/Sites/pousada_do_tucunare_2020 && clear && s. && nrd'
+
+
+# Ping
+alias ping-all='p-anp && p-pdt && p-rtc'
+alias p-anp='ping www.aguanovapiscinas.com -c 3'
+alias p-pdt='ping www.pousadadotucunare.net -c 3'
+alias p-rtc='ping www.ranchotrescoracoes.com.br -c 3'
+
+
+# Codes
+alias ss='cd /Volumes/Codes/seaside && clear && c.'
+alias hw='cd /Volumes/Codes/workcation && clear && c.'
+alias bp='cd /Volumes/Codes/beauty_point && clear && open "http://localhost:8080/" && c. && nrs'
+
+
+# remove the ‘application downloaded from the internet’ error message
+alias xatcr='xattr -cr '
+
+
+# download videos from webpage
+alias ydl='cd /Volumes/Pendrive/Downloads && youtube-dl'
+
+
+# reset dns
+alias dns:r='networksetup -setairportpower en0 off && sudo killall -HUP mDNSResponder && echo macOS DNS Cache Reset && networksetup -setairportpower en0 on'
+
+
+# listen evangelizar fm
+alias eva='open "http://evanam.crossradio.com.br:8002/stream/1;"'
+
+
+# brew
+alias bi="brew install"
+alias bs="brew search"
+alias bu="brew uninstall"
+alias br="bu"
+
+
+# yarn
+# alias yr='yarn run'
+# alias ya='yarn add'
+# alias yad='yarn add --dev'
+# alias yre='yarn remove'
+# alias yrd='yarn run dev'
+# alias yrg='yarn run generate && f && open /Applications/Cyberduck.app'
+# alias yrs='yarn run serve'
+
+
+#npm,
+alias nr='npm run'
+alias nrd='npm run dev'
+alias nrb='npm run build'
+alias nrg='npm run generate && f && open /Applications/Cyberduck.app'
+alias nrs='npm run serve'
+alias nrstt='npm run start'
+alias nrss='npm run start:api'
+alias nrsc='npm run start:app'
+alias ni='npm install'
+alias nig='npm install -g'
+alias nu='npm uninstall'
+alias nug='npm uninstall -g'
+alias nls='npm ls -g' # List installed packages
+alias nls='npm ls' # List installed packages
+alias nls='npm prune' # Remove un-used packages from node_modules folder
+alias nup='npm update' # Update all packages listed in package.json
+alias nrdup='npm dedupe' # Remove duplicate packages from node_modules
+alias nclean='npm cache clean -f' # Clean npm cache
+
+
+# moving
+alias ..='cd ..'
+alias ...='cd ../..'
+alias home='cd ~/'
+alias dbox='cd $HOME/Dropbox/Mac'
+alias prj='cd /Volumes/Projects && clear'
+alias sites='cd /Volumes/Sites && clear '
+
+
+# aliases
+alias ls='ls -lhaG'
+alias lr='ls -lhtr'
+alias history='fc -il 1i'
+alias c='clear'
+alias f='open .'
+alias t='trash --force'
+alias rm='rm -ifr'
+alias cpu='top -o cpu'   # CPU
+alias mem='top -o rsize' # Memory
+alias te='tree'
+
+
+# Pretty print the path
+alias path="echo $PATH | tr -s ':' '\n'"
+
+
+# Atualizar brew
+alias bubu="brew update && brew upgrade && brew cleanup && brew cask upgrade"
+
+
+# diversos
+alias bat="pmset -g batt"
+# alias speed="speed-test"
+alias update="sudo softwareupdate -v -i -a"
+# alias tempo="curl http://wttr.in/pereira_barreto"
+
+
+# ZSH
+alias sz='source ~/.zshrc'
+alias zsh='subl ~/.zshrc'
+alias ohmyzsh="subl ~/.oh-my-zsh"
+alias zshup="upgrade_oh_my_zsh"
+
+
+# Git
+alias gaa="git add ."
+alias gs="git status --short"
+alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
+alias gc="git commit -m"
+alias gp="git push"
+alias gps="git push && git status --short"
+# alias g:ps="dig a bitbucket.org && git push && git status"
+alias gnah='git reset --hard && git clean -df'
+alias gaac='rm -rf dist && git add . && git commit -m'
+alias gsync='git pull && git push'
+
+
+# bitbucket
+alias bit='dig a bitbucket.org'
+
+
+# mongodb
+alias mdb:kill='kill -kill $(lsof -t -i :27017)'
+alias mdb:s='mongod'
+alias mdbstt='mongod --dbpath=/Volumes/Pendrive/data/db'
+
+
+# clean Right Menu
+alias cleanRightMenu="home && echo 'cleaning...' && /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user"
+
+
+# bkps
+alias zsh-bkp="$HOME/Dropbox/Mac/Settings/Scripts/zsh-bkp.sh"
+alias dot-bkp="$HOME/Dropbox/Mac/Settings/Scripts/dot-bkp.sh"
+alias subl-bkp="$HOME/Dropbox/Mac/Settings/Scripts/subl-bkp.sh"
+alias vsc-bkp="$HOME/Dropbox/Mac/Settings/Scripts/vsc-bkp.sh"
+alias spcvim-bkp="$HOME/Dropbox/Mac/Settings/Scripts/spcvim-bkp.sh"
+alias dot-restore="$HOME/Dropbox/Mac/Settings/Scripts/dot-restore.sh"
+alias subl-restore="$HOME/Dropbox/Mac/Settings/Scripts/subl-restore.sh"
+
+
+# create e move to folder
+function mkcd()
+{
+  mkdir -p "$*"
+  cd "$*"
+}
+
+function mksh()
+{
+  touch "$*"
+  echo "#!/bin/bash" > "$*"
+  chmod u+x "$*"
+  open -a "Sublime Text" "S*"
+}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

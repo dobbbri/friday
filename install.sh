@@ -9,14 +9,14 @@ echo "$(tput setaf 2)FRIDAY: Greetings. Preparing to power up and begin diagnost
 echo "---------------------------------------------------------"
 echo "$(tput setaf 2)FRIDAY: Checking for Homebrew installation.$(tput sgr 0)"
 
-BREW_DIR="/usr/local/bin/brew"
+BREW_FOLDER="/usr/local/bin/brew"
 
-if [ -f "$BREW_DIR" ]
+if [ -f "$BREW_FOLDER" ]
 then
   echo "$(tput setaf 2)FRIDAY: Homebrew is installed.$(tput sgr 0)"
 else
   echo "$(tput setaf 3)FRIDAY: Installing Homebrew. Homebrew requires osx command lines tools, please download xcode first$(tput sgr 0)"
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   brew analytics off
   echo "$(tput setaf 2)FRIDAY: Homebrew installed.$(tput sgr 0)"
 fi
@@ -25,7 +25,7 @@ echo "---------------------------------------------------------"
 echo "$(tput setaf 2)FRIDAY: Installing Homebrew Cask packages.$(tput sgr 0)"
 
 tap_packages=(
-  "homebrew/bundle"
+  # "homebrew/bundle"
   "homebrew/cask"
   "homebrew/cask-fonts"
   "homebrew/core"
@@ -39,6 +39,7 @@ done
 echo "$(tput setaf 2)FRIDAY: Homebrew Tap installed.$(tput sgr 0)"
 
 echo "$(tput setaf 2)FRIDAY: Installing Homebrew System Packages.$(tput sgr 0)"
+
 brew_packages=(
   "autoconf"
   "fzf"
@@ -49,6 +50,7 @@ brew_packages=(
   "node"
   "python3"
   "ripgrep"
+  "wget"
   "youtube-dl"
 #  "tmux"
   "z"
@@ -99,10 +101,28 @@ pop_packages=(
 
 for package in "${pop_packages[@]}"
 do
-  echo "$(tput setaf 2)FRIDAY: Downloading $package.$(tput sgr 0)"
+  echo "$(tput setaf 2)FRIDAY: download $package.$(tput sgr 0)"
   wget $package
 done
-echo "$(tput setaf 2)FRIDAY: Homebrew PopClip package downloaded.$(tput sgr 0)"
+echo "$(tput setaf 2)FRIDAY: PopClip extensions installed.$(tput sgr 0)"
+
+
+
+echo "---------------------------------------------------------"
+echo "$(tput setaf 2)FRIDAY: install old versions.$(tput sgr 0)"
+
+old_packages=(
+  "wget http://usa.maintain.se/Cocktail11HSE.dmg"
+  "wget https://dl.devmate.com/com.macpaw.CleanMyMac3/CleanMyMac3.dmg"
+  "wget https://sipapp.io/updates/v1/sip-1.2.dmg"
+)
+
+for package in "${old_packages[@]}"
+do
+  echo "$(tput setaf 2)FRIDAY: download old version of $package.$(tput sgr 0)"
+  wget $package
+done
+echo "$(tput setaf 2)FRIDAY: Old versions installed.$(tput sgr 0)"
 
 
 echo "---------------------------------------------------------"
@@ -188,8 +208,8 @@ fi
 echo "---------------------------------------------------------"
 echo "$(tput setaf 2)FRIDAY: Checking for Git installation.$(tput sgr 0)"
 
-GIT_DIR="/usr/local/bin/git"
-if ! [[ -f "$GIT_DIR" ]]; then
+GIT_FOLDER="/usr/local/bin/git"
+if ! [[ -f "$GIT_FOLDER" ]]; then
   echo "$(tput setaf 1)FRIDAY: Invalid git installation. Aborting. Please install git.$(tput sgr 0)"
   exit 1
 fi
@@ -203,24 +223,23 @@ echo "$(tput setaf 2)FRIDAY: Git Packages installed.$(tput sgr 0)"
 echo "---------------------------------------------------------"
 echo "$(tput setaf 2)FRIDAY: Backup up current dotfiles.$(tput sgr 0)"
 
-# Backup files that are provided by the Jarvis into a ~/$HOME-backup directory
-BACKUP_DIR=$HOME/backup
+# Backup files that are provided by the Jarvis into a ~/$HOME/backup directory
+BACKUP_FOLDER=$HOME/backup
 
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
 # Create backup folder if it doesn't exist
-if [ ! -d $BACKUP_DIR ]; then
-  echo "$(tput setaf 2)FRIDAY: Creating backup directory at $BACKUP_DIR.$(tput sgr 0)"
-  mkdir -p $BACKUP_DIR
+if [ ! -d $BACKUP_FOLDER ]; then
+  echo "$(tput setaf 2)FRIDAY: Creating backup directory at $BACKUP_FOLDER.$(tput sgr 0)"
+  mkdir -p $BACKUP_FOLDER
 fi
 
 files=(
-  ".config/nvim"
   ".gitconfig"
+  ".gitignore_global"
   ".global_ignore"
-  ".global_ignore"
-  ".tmux.conf"
+  # ".tmux.conf"
   ".wgetrc"
   ".zshrc"
 )
@@ -228,9 +247,10 @@ files=(
 for filename in "${files[@]}"; do
     if [ -L $HOME/$filename ]; then
       echo "$(tput setaf 2)FRIDAY: Backing up $filename.$(tput sgr 0)"
-      mv $HOME/$filename $BACKUP_DIR/$filename
+      mv $HOME/$filename $BACKUP_FOLDER/$filename
     else
       echo "$(tput setaf 3)FRIDAY: $filename does not exist at $HOME.$(tput sgr 0)"
+      rm -rf $HOME/$filename
     fi
 done
 
@@ -239,39 +259,50 @@ echo "$(tput setaf 2)FRIDAY: Backup completed.$(tput sgr 0)"
 
 echo "---------------------------------------------------------"
 echo "$(tput setaf 2)FRIDAY: Installing Neovim plugins and linking dotfiles.$(tput sgr 0)"
-DOTFILES_DIR=$HOME/Dropbox/Mac/Settings/Dotfiles
-ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc
-ln -s $DOTFILES_DIR/git/gitconfig $HOME/.gitconfig
-ln -s $DOTFILES_DIR/git/gitignore_global $HOME/.gitignore_global
-ln -s $DOTFILES_DIR/git/global_ignore $HOME/.global_ignore
-ln -s $DOTFILES_DIR/zsh/wgetrc $HOME/.wgetrc
-ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf
+
+DOTFILES_FOLDER=$HOME/Dropbox/Mac/Dotfiles
+ln -s $DOTFILES_FOLDER/zsh/zshrc $HOME/.zshrc
+ln -s $DOTFILES_FOLDER/git/gitconfig $HOME/.gitconfig
+ln -s $DOTFILES_FOLDER/git/gitignore_global $HOME/.gitignore_global
+ln -s $DOTFILES_FOLDER/git/global_ignore $HOME/.global_ignore
+ln -s $DOTFILES_FOLDER/wget/wgetrc $HOME/.wgetrc
+# ln -s $DOTFILES_FOLDER/tmux/tmux.conf $HOME/.tmux.conf
 echo "$(tput setaf 2)FRIDAY: Linked dotfiles.$(tput sgr 0)"
 
 
 echo "---------------------------------------------------------"
-echo "$(tput setaf 2)FRIDAY: Installing Neovim config files.$(tput sgr 0)"
+echo "$(tput setaf 2)FRIDAY: Creating Neovim Backup dir.$(tput sgr 0)"
+
+# Create nvim backup folder if it doesn't exist
+VIM_BACKUP_FOLDER=$HOME/.local/share/nvim/backup
+if [ ! -d $VIM_BACKUP_FOLDER ]; then
+    echo "Creating $VIM_BACKUP_FOLDER"
+    mkdir -p $VIM_BACKUP_FOLDER
+fi
 
 # Create config folder if it doesn't exist
-CONFIG_DIR=$HOME/.config
-if [ ! -d $CONFIG_DIR ]; then
-    echo "Creating ~/.config"
-    mkdir -p $CONFIG_DIR/nvim
+CONFIG_FOLDER=$HOME/.config/nvim
+if [ ! -d $CONFIG_FOLDER ]; then
+    echo "Creating $CONFIG_FOLDER"
+    mkdir -p $CONFIG_FOLDER
 fi
 
-config=$DOTFILES_DIR/nvim
-target=$CONFIG_DIR/nvim
-if [ -e $target/snippets ]; then
+echo "$(tput setaf 2)FRIDAY: Linking Neovim config files.$(tput sgr 0)"
+
+VIM_LINK_FOLDER=$DOTFILES_FOLDER/nvim
+if [ -e $CONFIG_FOLDER/snippets ]; then
   echo "$(tput setaf 3)FRIDAY: ~${target#$HOME} already exists... Skipping.$(tput sgr 0)"
 else
-  echo "$(tput setaf 2)FRIDAY: Creating symlink for ${config}.$(tput sgr 0)"
-  ln -s $config/coc-settings.json $target/coc-settings.json
-  ln -s $config/plugins.vim $target/plugins.vim
-  ln -s $config/init.vim $target/init.vim
-  ln -s $config/snippets $target/snippets
+  echo "$(tput setaf 2)FRIDAY: Creating symlink for ${VIM_LINK_FOLDER}.$(tput sgr 0)"
+  ln -s $VIM_LINK_FOLDER/coc-settings.json $CONFIG_FOLDER/coc-settings.json
+  ln -s $VIM_LINK_FOLDER/plugins.vim $CONFIG_FOLDER/plugins.vim
+  ln -s $VIM_LINK_FOLDER/init.vim $CONFIG_FOLDER/init.vim
+  ln -s $VIM_LINK_FOLDER/snippets $CONFIG_FOLDER/snippets
 fi
 
-curl -fLo $CONFIG_DIR/nvim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+echo "$(tput setaf 2)FRIDAY: Installing Neovim packages.$(tput sgr 0)"
+
+curl -fLo $CONFIG_FOLDER/nvim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim +PlugInstall +qall
 nvim +UpdateRemotePlugins +qall
 
@@ -279,16 +310,10 @@ nvim +UpdateRemotePlugins +qall
 echo "---------------------------------------------------------"
 echo "$(tput setaf 2)FRIDAY: Installing Space vim-airline theme.$(tput sgr 0)"
 
-cp $config/space.vim ~/.config/nvim/plugged/vim-airline-themes/autoload/airline/themes/space.vim
+cp $VIM_LINK_FOLDER/space.vim $CONFIG_FOLDER/plugged/vim-airline-themes/autoload/airline/themes/space.vim
+
 echo "$(tput setaf 2)FRIDAY: Neovim configured.$(tput sgr 0)"
 
-#echo "---------------------------------------------------------"
-#echo "$(tput setaf 2)FRIDAY: Installing tmux plugin manager.$(tput sgr 0)"
-
-#if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-#  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-#  ~/.tmux/plugins/tpm/scripts/install_plugins.sh
-#fi
 
 echo "---------------------------------------------------------"
 echo "$(tput setaf 2)FRIDAY: Setting Mac defaults.$(tput sgr 0)"
@@ -301,6 +326,31 @@ defaults write com.apple.dock persistent-apps -array
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0
 killall Dock
+
+echo "$(tput setaf 2)FRIDAY: Restore safari bookmarks.$(tput sgr 0)"
+cp $HOME/Dropbox/Mac/Settings/Safari/Bookmarks.plist ~/Library/Safari/Bookmarks.plist
+
+echo "$(tput setaf 2)FRIDAY: Restore preferences.$(tput sgr 0)"
+cp $HOME/Dropbox/Mac/Settings/Preferences/com.apple.Safari.plist ~/Library/Preferences/com.apple.Safari.plist
+cp $HOME/Dropbox/Mac/Settings/Preferences/com.apple.Terminal.plist ~/Library/Preferences/com.apple.Terminal.plist
+cp $HOME/Dropbox/Mac/Settings/Preferences/com.apple.dock.plist ~/Library/Preferences/com.apple.dock.plist
+cp $HOME/Dropbox/Mac/Settings/Preferences/com.apple.finder.plist ~/Library/Preferences/com.apple.finder.plist
+cp $HOME/Dropbox/Mac/Settings/Preferences/com.apple.spaces.plist ~/Library/Preferences/com.apple.spaces.plist
+cp $HOME/Dropbox/Mac/Settings/Preferences/com.apple.systempreferences.plist ~/Library/Preferences/com.apple.systempreferences.plist
+cp $HOME/Dropbox/Mac/Settings/Preferences/com.apple.systemuiserver.plist ~/Library/Preferences/com.apple.systemuiserver.plist
+
+echo "$(tput setaf 2)FRIDAY: Restore Sublime Text Settings.$(tput sgr 0)"
+cp -r $HOME/Dropbox/Mac/Settings/SublimeText/User $HOME/Library/Application\ Support/Sublime\ Text\ 3/Packages
+
+
+
+#echo "---------------------------------------------------------"
+#echo "$(tput setaf 2)FRIDAY: Installing tmux plugin manager.$(tput sgr 0)"
+
+#if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+#  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+#  ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+#fi
 
 
 echo "---------------------------------------------------------"
