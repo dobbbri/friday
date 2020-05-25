@@ -56,7 +56,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'matze/vim-move'
 
 " === Git Plugins === "
-" Enable git changes to be shown in sign columnPlug 'mhinz/vim-signify'
+" Enable git changes to be shown in sign column
+Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 
 " === Javascript Plugins === "
